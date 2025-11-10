@@ -55,9 +55,8 @@ public class MinPQ<K extends Comparable<K>> implements Iterable<K> {
     }
 
     private void grow(int capacity) {
-        assert capacity > pq.length;
         K[] temp = (K[]) new Comparable[capacity];
-        for (int i = 1; i <= pq.length; i++) {
+        for (int i = 1; i < pq.length; i++) {
             temp[i] = pq[i];
         }
         pq = temp;
