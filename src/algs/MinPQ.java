@@ -20,9 +20,7 @@ public class MinPQ<K extends Comparable<K>> implements Iterable<K> {
     public MinPQ(K[] keys) {
         size = keys.length;
         pq = (K[]) new Comparable[keys.length + 1];
-        for (int i = 0; i < size; i++) {
-            pq[i + 1] = keys[i];
-        }
+        System.arraycopy(keys, 0, pq, 1, size);
         for (int k = size / 2; k >= 1; k--) {
             sink(k);
         }
@@ -56,9 +54,7 @@ public class MinPQ<K extends Comparable<K>> implements Iterable<K> {
 
     private void grow(int capacity) {
         K[] temp = (K[]) new Comparable[capacity];
-        for (int i = 1; i < pq.length; i++) {
-            temp[i] = pq[i];
-        }
+        if (pq.length - 1 >= 0) System.arraycopy(pq, 1, temp, 1, pq.length - 1);
         pq = temp;
     }
 
@@ -86,7 +82,7 @@ public class MinPQ<K extends Comparable<K>> implements Iterable<K> {
         while (2 * k <= size) {
             int j = 2 * k;
             if (j < size && greater(j, j + 1)) j++;
-            if (greater(j, k)) break;
+            if (!greater(j, k)) break;
             swap(k, j);
             k = j;
         }

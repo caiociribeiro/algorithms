@@ -1,8 +1,8 @@
 package algs;
 
 public class UnionFind {
-    private int[] parent;
-    private byte[] rank;
+    private final int[] parent;
+    private final byte[] rank;
     private int count;
 
     public UnionFind(int n) {

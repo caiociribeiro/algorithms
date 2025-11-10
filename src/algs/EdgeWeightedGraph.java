@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class EdgeWeightedGraph {
     private final int V;
     private int E;
-    private LinkedList<Edge>[] adj;
+    private final LinkedList<Edge>[] adj;
 
     public EdgeWeightedGraph(int V) {
         if (V < 0) throw new IllegalArgumentException("Number of vertices must be non-negative");

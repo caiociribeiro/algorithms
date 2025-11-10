@@ -10,8 +10,8 @@ import java.util.Scanner;
 public class Digraph {
     private final int V;
     private int E;
-    private LinkedList<Integer>[] adj;
-    private int[] indegree;
+    private final LinkedList<Integer>[] adj;
+    private final int[] indegree;
 
     public Digraph(int V) {
         if (V < 0) throw new IllegalArgumentException("Number of vertices must be nonnegative");
