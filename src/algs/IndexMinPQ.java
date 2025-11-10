@@ -3,6 +3,10 @@ package algs;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Min Indexed Priority Queue implementation using binary heap.
+ */
+
 @SuppressWarnings("unchecked")
 public class IndexMinPQ<K extends Comparable<K>> implements Iterable<Integer> {
     private final int maxN;
