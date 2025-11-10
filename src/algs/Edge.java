@@ -24,6 +24,6 @@ public record Edge(int v, int w, double weight) implements Comparable<Edge> {
 
     @Override
     public String toString() {
-        return String.format("(%d-%d %.5f)", v, w, weight);
+        return String.format("%d-%d %.5f", v, w, weight);
     }
 }

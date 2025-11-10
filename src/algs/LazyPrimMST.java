@@ -6,57 +6,50 @@ import java.util.Scanner;
 
 /**
  * Computes a MST in an EWG.
- * Eager implementation of Prim's Algorithm using an indexed min-heap priority queue.
+ * Lazy implementation of Prim's Algorithm.
  */
-public class PrimMST {
-    private Edge[] edgeTo;
-    private double[] distTo;
+public class LazyPrimMST {
     private boolean[] marked;
-    private IndexMinPQ<Double> pq;
+    private Queue<Edge> mst;
+    private MinPQ<Edge> pq;
+    private double weight;
 
-    public PrimMST(EdgeWeightedGraph G) {
-        edgeTo = new Edge[G.V()];
-        distTo = new double[G.V()];
+    public LazyPrimMST(EdgeWeightedGraph G) {
+        pq = new MinPQ<>();
+        mst = new Queue<>();
         marked = new boolean[G.V()];
-        pq = new IndexMinPQ<>(G.V());
-        for (int v = 0; v < G.V(); v++)
-            distTo[v] = Double.POSITIVE_INFINITY;
         for (int v = 0; v < G.V(); v++)
             if (!marked[v]) prim(G, v);
     }
 
     private void prim(EdgeWeightedGraph G, int s) {
-        distTo[s] = 0.0;
-        pq.insert(s, distTo[s]);
+        scan(G, s);
         while (!pq.isEmpty()) {
-            int v = pq.delMin();
-            scan(G, v);
+            Edge e = pq.delMin();
+            int v = e.either();
+            int w = e.other(v);
+            assert marked[v] || marked[w];
+            if (marked[v] && marked[w]) continue;
+            mst.enqueue(e);
+            weight += e.weight();
+            if (!marked[v]) scan(G, v);
+            if (!marked[w]) scan(G, w);
         }
     }
 
     private void scan(EdgeWeightedGraph G, int v) {
+        assert !marked[v];
         marked[v] = true;
         for (Edge e : G.adj(v)) {
-            int w = e.other(v);
-            if (marked[w]) continue;
-            if (e.weight() < distTo[w]) {
-                distTo[w] = e.weight();
-                edgeTo[w] = e;
-                if (pq.contains(w)) pq.decreaseKey(w, distTo[w]);
-                else pq.insert(w, distTo[w]);
-            }
+            if (!marked[e.other(v)]) pq.insert(e);
         }
     }
 
     public Iterable<Edge> edges() {
-        Queue<Edge> mst = new Queue<>();
-        for (Edge e : edgeTo) if (e != null) mst.enqueue(e);
         return mst;
     }
 
     public double weight() {
-        double weight = 0.0;
-        for (Edge e : edges()) weight += e.weight();
         return weight;
     }
 
@@ -65,7 +58,7 @@ public class PrimMST {
         File file = new File(args[0]);
         try (Scanner in = new Scanner(file)) {
             EdgeWeightedGraph G = new EdgeWeightedGraph(in);
-            PrimMST mst = new PrimMST(G);
+            LazyPrimMST mst = new LazyPrimMST(G);
             for (Edge e : mst.edges()) {
                 System.out.println(e);
             }
@@ -74,5 +67,4 @@ public class PrimMST {
             throw new FileNotFoundException("File " + args[0] + " not found");
         }
     }
-
 }

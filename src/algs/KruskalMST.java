@@ -16,7 +16,7 @@ public class KruskalMST {
 
         UnionFind uf = new UnionFind(G.V());
         while (!pq.isEmpty() && mst.size() < G.V() - 1) {
-            Edge e = pq.removeMin();
+            Edge e = pq.delMin();
             int v = e.either();
             int w = e.other(v);
             if (!uf.connected(v, w)) {
@@ -44,6 +44,7 @@ public class KruskalMST {
             for (Edge e : mst.edges()) {
                 System.out.println(e);
             }
+            System.out.printf("%.5f\n", mst.weight());
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("File " + args[0] + " not found");
         }

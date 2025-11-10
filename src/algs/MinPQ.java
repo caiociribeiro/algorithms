@@ -42,7 +42,7 @@ public class MinPQ<K extends Comparable<K>> implements Iterable<K> {
         assert isMinHeap();
     }
 
-    public K removeMin() {
+    public K delMin() {
         if (isEmpty()) throw new NoSuchElementException("Priority queue underflow");
         K min = pq[1];
         swap(1, size--);
@@ -123,7 +123,7 @@ public class MinPQ<K extends Comparable<K>> implements Iterable<K> {
 
         public K next() {
             if (!hasNext()) throw new NoSuchElementException();
-            return copy.removeMin();
+            return copy.delMin();
         }
     }
 }
