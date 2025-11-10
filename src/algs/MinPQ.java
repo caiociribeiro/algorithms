@@ -37,23 +37,14 @@ public class MinPQ<K extends Comparable<K>> implements Iterable<K> {
         return size == 0;
     }
 
-    private void grow(int capacity) {
-        assert capacity > pq.length;
-        K[] temp = (K[]) new Comparable[capacity];
-        for (int i = 1; i <= pq.length; i++) {
-            temp[i] = pq[i];
-        }
-        pq = temp;
-    }
-
-    private void insert(K k) {
+    public void insert(K k) {
         if (size == pq.length - 1) grow(2 * pq.length);
         pq[++size] = k;
         swim(size);
         assert isMinHeap();
     }
 
-    private K removeMin() {
+    public K removeMin() {
         if (isEmpty()) throw new NoSuchElementException("Priority queue underflow");
         K min = pq[1];
         swap(1, size--);
@@ -61,6 +52,15 @@ public class MinPQ<K extends Comparable<K>> implements Iterable<K> {
         pq[size + 1] = null;
         assert isMinHeap();
         return min;
+    }
+
+    private void grow(int capacity) {
+        assert capacity > pq.length;
+        K[] temp = (K[]) new Comparable[capacity];
+        for (int i = 1; i <= pq.length; i++) {
+            temp[i] = pq[i];
+        }
+        pq = temp;
     }
 
     private boolean isMinHeap() {
