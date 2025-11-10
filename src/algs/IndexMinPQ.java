@@ -140,7 +140,7 @@ public class IndexMinPQ<K extends Comparable<K>> implements Iterable<Integer> {
         while (2 * k <= n) {
             int j = 2 * k;
             if (j < n && greater(j, j + 1)) j++;
-            if (!greater(j, k)) break;
+            if (!greater(k, j)) break;
             swap(k, j);
             k = j;
         }

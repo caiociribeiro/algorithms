@@ -82,7 +82,7 @@ public class MinPQ<K extends Comparable<K>> implements Iterable<K> {
         while (2 * k <= size) {
             int j = 2 * k;
             if (j < size && greater(j, j + 1)) j++;
-            if (!greater(j, k)) break;
+            if (!greater(k, j)) break;
             swap(k, j);
             k = j;
         }
