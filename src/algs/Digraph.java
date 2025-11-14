@@ -54,7 +54,7 @@ public class Digraph {
         return E;
     }
 
-    public void validateVertex(int v) {
+    private void validateVertex(int v) {
         if (v < 0 || v >= V) throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
     }
 
