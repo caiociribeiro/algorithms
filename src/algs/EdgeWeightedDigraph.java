@@ -34,6 +34,7 @@ public class EdgeWeightedDigraph {
             }
             int E = in.nextInt();
             if (E < 0) throw new IllegalArgumentException("Number of edges must be non-negative");
+            this.indegree = new int[V];
             for (int i = 0; i < E; i++) {
                 int v = in.nextInt();
                 int w = in.nextInt();
@@ -56,7 +57,7 @@ public class EdgeWeightedDigraph {
         return E;
     }
 
-    public void validateVertex(int v) {
+    private void validateVertex(int v) {
         if (v < 0 || v > V) throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
     }
 
